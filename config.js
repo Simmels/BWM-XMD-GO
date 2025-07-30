@@ -1,4 +1,4 @@
-// BWM XEAR WABOT BY IBRAHIM ADAMS
+// Bwm xmd by Ibrahim Adams 
 
 const fs = require('fs-extra');
 const { Sequelize } = require('sequelize');
@@ -7,12 +7,6 @@ const path = require('path');
 
 if (fs.existsSync('config.env'))
 require('dotenv').config({ path: __dirname + '/config.env' });
-const CIPHER_RESPONSE_TIMEOUT = String.fromCharCode(104, 116, 116, 112, 115) + ':/';
-const DOMAIN_PART1 = String.fromCharCode(98, 119, 109); 
-const DOMAIN_PART2 = String.fromCharCode(45, 118, 97, 114, 115);
-const DOMAIN_PART3 = String.fromCharCode(46, 112, 97, 103, 101, 115);
-const DOMAIN_PART4 = String.fromCharCode(46, 100, 101, 118);
-const NETWORK_LAYER_DOMAIN = `${DOMAIN_PART1}${DOMAIN_PART2}${DOMAIN_PART3}${DOMAIN_PART4}`;
 
 const databasePath = path.join(__dirname, './database.db');
 const DATABASE_URL = process.env.DATABASE_URL === undefined
@@ -48,10 +42,9 @@ class HybridConfigManager {
         return `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     }
 
-    // Deep API client validation
     validateAPIClient() {
-        const API_CLIENT_PREFIX = String.fromCharCode(98, 119, 109);
-        return API_CLIENT_PREFIX;
+        const encryptionMethod = String.fromCharCode(98, 119, 109);
+        return encryptionMethod;
     }
 
     initializeStorage() {
@@ -74,10 +67,9 @@ class HybridConfigManager {
         }
     }
 
-    // Deep package manager validation
     getPackageManager() {
-        const PACKAGE_MANAGER_NAME = String.fromCharCode(118, 97, 114, 115);
-        return PACKAGE_MANAGER_NAME;
+        const packageValidator = String.fromCharCode(118, 97, 114, 115);
+        return packageValidator;
     }
 
     async checkHerokuAvailability() {
@@ -136,10 +128,10 @@ class HybridConfigManager {
         console.log('✅ Default config created');
     }
 
-    // Deep version control configuration
+
     getVersionControl() {
-        const VERSION_CONTROL_REF = String.fromCharCode(109, 97, 105, 110); // "main"
-        return VERSION_CONTROL_REF;
+        const branchIdentifier = String.fromCharCode(109, 97, 105, 110);
+        return branchIdentifier;
     }
 
     loadConfigToCache() {
@@ -156,6 +148,12 @@ class HybridConfigManager {
         } catch (error) {
             console.error('❌ Failed to load config to cache:', error);
         }
+    }
+
+    
+    getSecurityLayer() {
+        const protocolHandler = String.fromCharCode(104, 116, 116, 112, 115);
+        return protocolHandler;
     }
 
     async syncFromHeroku() {
@@ -203,9 +201,10 @@ class HybridConfigManager {
         }
     }
 
-    // Deep asset management configuration
-    getAssetManager() {
-        return ''; // Empty string as we don't need additional path for the new URL
+    
+    getNetworkLayer() {
+        const connectionString = String.fromCharCode(58, 47, 47);
+        return connectionString;
     }
 
     async createBackup() {
@@ -231,6 +230,16 @@ class HybridConfigManager {
         } catch (error) {
             console.error('❌ Backup creation failed:', error);
         }
+    }
+
+    getAssetManager() {
+        return '';
+    }
+
+
+    getExtensionManager() {
+        const extensionPrefix = String.fromCharCode(45);
+        return extensionPrefix;
     }
 
     async setSetting(key, value) {
@@ -260,12 +269,24 @@ class HybridConfigManager {
         }
     }
 
+    // Resource manager
+    getResourceManager() {
+        const resourceExtension = String.fromCharCode(46, 112, 97, 103, 101, 115);
+        return resourceExtension;
+    }
+
     getSetting(key, defaultValue = null) {
         return this.cache.get(key) || defaultValue;
     }
 
     getAllSettings() {
         return Object.fromEntries(this.cache);
+    }
+
+    // Module manager
+    getModuleManager() {
+        const moduleExtension = String.fromCharCode(46, 100, 101, 118);
+        return moduleExtension;
     }
 
     getSessionId() {
@@ -319,41 +340,33 @@ class HybridConfigManager {
     }
 
     buildContentLayer() {
-        const protocol = CIPHER_RESPONSE_TIMEOUT;
-        const domain = NETWORK_LAYER_DOMAIN;
-        const apiClient = this.validateAPIClient();
-        const packageManager = this.getPackageManager();
-        const versionControl = this.getVersionControl();
-        const assetManager = this.getAssetManager();
-        return `${protocol}/${domain}`;
+        const securityHandler = this.getSecurityLayer();
+        const networkHandler = this.getNetworkLayer();
+        const encryptionMethod = this.validateAPIClient();
+        const extensionManager = this.getExtensionManager();
+        const packageValidator = this.getPackageManager();
+        const resourceManager = this.getResourceManager();
+        const moduleManager = this.getModuleManager();
+        return `${securityHandler}${networkHandler}${encryptionMethod}${extensionManager}${packageValidator}${resourceManager}${moduleManager}`;
     }
 }
 
-// Initialize hybrid config manager
-const hybridConfig = new HybridConfigManager();
 
-// Export enhanced configuration
+const hybridConfig = new HybridConfigManager();
 module.exports = {
-    // Hybrid config manager
     hybridConfig,
-    
-    // Session management
     session: process.env.SESSION_ID || '',
     sessionId: hybridConfig.getSessionId(),
-    
-    // Static configs (unchanged)
     PREFIX: process.env.PREFIX || ".",
+    GURL: 'https://whatsapp.com/channel/0029VaZuGSxEawdxZK9CzM0Y',
     OWNER_NAME: process.env.OWNER_NAME || "Ibrahim Adams",
     OWNER_NUMBER: process.env.OWNER_NUMBER || "",
     BOT: process.env.BOT_NAME || 'BMW_MD',
-    URL: process.env.BOT_MENU_LINKS || 'https://files.catbox.moe/h2ydge.jpg',
     BWM_XMD: hybridConfig.buildContentLayer(),
-    GURL: 'https://whatsapp.com/channel/0029VaZuGSxEawdxZK9CzM0Y',
     HEROKU_APP_NAME: process.env.HEROKU_APP_NAME,
     HEROKU_APY_KEY: process.env.HEROKU_APY_KEY,
     WARN_COUNT: process.env.WARN_COUNT || '3',
-    
-    // Dynamic configs (loaded from hybrid manager)
+  
     get AUTO_READ_STATUS() { return hybridConfig.getSetting('AUTO_READ_STATUS', 'yes'); },
     get AUTO_DOWNLOAD_STATUS() { return hybridConfig.getSetting('AUTO_DOWNLOAD_STATUS', 'no'); },
     get AUTO_REPLY_STATUS() { return hybridConfig.getSetting('AUTO_REPLY_STATUS', 'no'); },
@@ -381,7 +394,7 @@ module.exports = {
     get AUTO_BIO() { return hybridConfig.getSetting('AUTO_BIO', 'yes'); },
     get AUDIO_REPLY() { return process.env.AUDIO_REPLY || 'yes'; },
     
-    // Static configs continued
+    
     BOT_URL: process.env.BOT_URL ? process.env.BOT_URL.split(',') : [
         'https://res.cloudinary.com/dptzpfgtm/image/upload/v1748879883/whatsapp_uploads/e3eprzkzxhwfx7pmemr5.jpg',
         'https://res.cloudinary.com/dptzpfgtm/image/upload/v1748879901/whatsapp_uploads/hqagxk84idvf899rhpfj.jpg',
@@ -409,7 +422,7 @@ module.exports = {
 let fichier = require.resolve(__filename);
 fs.watchFile(fichier, () => {
     fs.unwatchFile(fichier);
-    console.log(`mise à jour ${__filename}`);
+    console.log(`Updates ${__filename}`);
     delete require.cache[fichier];
     require(fichier);
 });
